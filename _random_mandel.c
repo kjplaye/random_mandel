@@ -1,11 +1,8 @@
-// gcc _random_mandel.c -o _random_mandel.so -fPIC -shared -lm
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <math.h>
 
-#define SCREEN_WIDTH 1400
-#define SCREEN_HEIGHT 800
 #define MAX_ITER 256
 #define ZOOM_RATIO 1.7
 #define COLOR_STEP 8
@@ -15,7 +12,7 @@
 #define FP_SIZE 28
 #define FPM(x,y) ((int)(((long long)(x)*(long long)(y)) >> FP_SIZE))
 
-#define point(x,y) pnt[(int)(x)+(int)(y)*SCREEN_WIDTH]
+#define point(x,y) pnt[(int)(x)+(int)(y)*screen_width]
 unsigned * pnt;
 
 double X1 = -4;
@@ -25,6 +22,10 @@ double Y2 = 2;
 
 unsigned mandel_max_iters = 256;
 unsigned color_table[MAX_ITER];
+
+int screen_width; 
+int screen_height;
+
 
 void pal_init(void)
 {
@@ -97,38 +98,38 @@ void draw_fractal(void)
   int x,y;
   int i,j;
 
-  for (x=0;x<SCREEN_WIDTH;x++)
-    for (y=0;y<SCREEN_HEIGHT;y++)
-      point(x,y) = color( ((double)x)*(X2-X1)/SCREEN_WIDTH+X1,
-                          ((double)y)*(Y2-Y1)/SCREEN_HEIGHT+Y1 );
+  for (x=0;x<screen_width;x++)
+    for (y=0;y<screen_height;y++)
+      point(x,y) = color( ((double)x)*(X2-X1)/screen_width+X1,
+                          ((double)y)*(Y2-Y1)/screen_height+Y1 );
 }
 
 void pick_random_xy2(int * xx, int * yy)
 {
   int x,y,i;
   int a;
-  int i_array[SCREEN_WIDTH][SCREEN_HEIGHT];
+  int i_array[screen_width][screen_height];
 
   int max, count, magic;
 
   max = 0;
   for(i=0;i<1000;i++)
     {
-      x = random() % SCREEN_WIDTH;
-      y = random() % SCREEN_HEIGHT;
+      x = random() % screen_width;
+      y = random() % screen_height;
 
-      a = mandel_iters( ((double)x)*(X2-X1)/SCREEN_WIDTH+X1,
-			((double)y)*(Y2-Y1)/SCREEN_HEIGHT+Y1) % MAX_ITER;
+      a = mandel_iters( ((double)x)*(X2-X1)/screen_width+X1,
+			((double)y)*(Y2-Y1)/screen_height+Y1) % MAX_ITER;
       if (a > max) max = a;
     }
 
   for(i=0;i<1000;i++)
     {
-      x = random() % SCREEN_WIDTH;
-      y = random() % SCREEN_HEIGHT;
+      x = random() % screen_width;
+      y = random() % screen_height;
 
-      a = mandel_iters( ((double)x)*(X2-X1)/SCREEN_WIDTH+X1,
-			((double)y)*(Y2-Y1)/SCREEN_HEIGHT+Y1) % MAX_ITER;
+      a = mandel_iters( ((double)x)*(X2-X1)/screen_width+X1,
+			((double)y)*(Y2-Y1)/screen_height+Y1) % MAX_ITER;
       if (a > max/2) break;
     }
 
@@ -137,7 +138,7 @@ void pick_random_xy2(int * xx, int * yy)
   return;
 }
 
-int main_draw(unsigned * screen)
+int main_draw(unsigned * screen, int width, int height)
 {
   double alpha,v1,v2;
 
@@ -145,6 +146,9 @@ int main_draw(unsigned * screen)
   double xx,yy;
   int flag;
 
+  screen_height = height;
+  screen_width = width;
+  
   srand(time(NULL));
 
   pnt = screen;
@@ -160,20 +164,20 @@ int main_draw(unsigned * screen)
       alpha = 1/ZOOM_RATIO;
       
       pick_random_xy2(&x,&y);
-      v1 = (double)x*(X2-X1)+SCREEN_WIDTH*X1;
+      v1 = (double)x*(X2-X1)+screen_width*X1;
       v2 = (X2-X1)*alpha;
-      X2 = -v1 + ((double)x-SCREEN_WIDTH)*v2;
+      X2 = -v1 + ((double)x-screen_width)*v2;
       X1 = -v1 + x*v2;
-      X1/=-SCREEN_WIDTH;
-      X2/=-SCREEN_WIDTH;
+      X1/=-screen_width;
+      X2/=-screen_width;
       
       
-      v1 = (double)y*(Y2-Y1)+SCREEN_HEIGHT*Y1;
+      v1 = (double)y*(Y2-Y1)+screen_height*Y1;
       v2 = (Y2-Y1)*alpha;
-      Y2 = -v1 + ((double)y-SCREEN_HEIGHT)*v2;
+      Y2 = -v1 + ((double)y-screen_height)*v2;
       Y1 = -v1 + y*v2;	  
-      Y1/=-SCREEN_HEIGHT;
-      Y2/=-SCREEN_HEIGHT;	      
+      Y1/=-screen_height;
+      Y2/=-screen_height;	      
     }		  
 
   draw_fractal();
