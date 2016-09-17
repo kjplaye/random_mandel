@@ -108,8 +108,6 @@ void pick_random_xy2(int * xx, int * yy)
 {
   int x,y,i;
   int a;
-  int i_array[screen_width][screen_height];
-
   int max, count, magic;
 
   max = 0;
@@ -154,6 +152,7 @@ int main_draw(unsigned * screen, int width, int height)
   pnt = screen;
   pal_init();
 
+
   X1 = -4;
   X2 = 4;
   Y1 = -2;
@@ -164,14 +163,14 @@ int main_draw(unsigned * screen, int width, int height)
       alpha = 1/ZOOM_RATIO;
       
       pick_random_xy2(&x,&y);
+      
       v1 = (double)x*(X2-X1)+screen_width*X1;
       v2 = (X2-X1)*alpha;
       X2 = -v1 + ((double)x-screen_width)*v2;
       X1 = -v1 + x*v2;
       X1/=-screen_width;
       X2/=-screen_width;
-      
-      
+            
       v1 = (double)y*(Y2-Y1)+screen_height*Y1;
       v2 = (Y2-Y1)*alpha;
       Y2 = -v1 + ((double)y-screen_height)*v2;
