@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import os,sys
 import ctypes
@@ -18,7 +18,7 @@ height = int(sys.argv[2])
 x_max = 0
 while x_max == 0:
     x = numpy.zeros([height,width,4],dtype = numpy.uint8)
-    _random_mandel.main_draw(x.ctypes.get_as_parameter(),ctypes.c_int32(width),ctypes.c_int32(height))
+    _random_mandel.main_draw(x.ctypes._as_parameter_,ctypes.c_int32(width),ctypes.c_int32(height))
     x_max = x.max()
     
 X = Image.fromarray(x[:,:,:3])
