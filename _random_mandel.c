@@ -5,7 +5,8 @@
 
 #define MAX_ITER 256
 #define ZOOM_RATIO 1.7
-#define COLOR_STEP 8
+#define COLOR_STEP 32
+#define MAX_INTERIOR_COLOR 50
 
 #define TWO_PI 6.2831853
 
@@ -52,7 +53,7 @@ void pal_init(void)
   for (x=0;x<256;x++) color_table[x] = (((int) r[x]) << 16) + (((int) g[x]) << 8) + (((int) b[x]));
 }
 
-int mandel_iters(double x,double y)
+int mandel_iters(double x,double y, double * out_x, double * out_y)
 {
   int c;
   int iters = 1;
@@ -78,17 +79,31 @@ int mandel_iters(double x,double y)
       fp_x = fp_next_x;
       fp_y = fp_next_y;
     }
+  if (out_x) *out_x = (double)fp_x / (1<<FP_SIZE);
+  if (out_y) *out_y = (double)fp_y / (1<<FP_SIZE);
   return iters;
 }
 
+double int_r;
+double int_g;
+double int_b;
 unsigned color(double x,double y)
 {
   int c;
   int iters = 1;
 
-  iters = mandel_iters(x,y);
-  if (iters == mandel_max_iters) return 0x000000;
 
+  double out_x, out_y;
+  iters = mandel_iters(x,y,&out_x,&out_y);
+  if (iters == mandel_max_iters)
+    {
+      double r = sqrt(out_x*out_x + out_y*out_y);
+      unsigned int_scale = ((unsigned)(r * 1000)) % (2*MAX_INTERIOR_COLOR);
+      unsigned int_scale2 = (int_scale>MAX_INTERIOR_COLOR) ? (2*MAX_INTERIOR_COLOR - int_scale) : int_scale;
+
+      return (((int)(int_scale2 * int_b)) << 16) + (((int)(int_scale2 * int_g)) << 8) + (int)(int_scale2 * int_r);
+    }
+  
   c = color_table[iters % 256];
   return c;  
 }
@@ -98,6 +113,9 @@ void draw_fractal(void)
   int x,y;
   int i,j;
 
+  int_r = (128 + (random() % 128)) / 128.0;
+  int_g = (128 + (random() % 128)) / 128.0;
+  int_b = (128 + (random() % 128)) / 128.0;
   for (x=0;x<screen_width;x++)
     for (y=0;y<screen_height;y++)
       point(x,y) = color( ((double)x)*(X2-X1)/screen_width+X1,
@@ -117,7 +135,7 @@ void pick_random_xy2(int * xx, int * yy)
       y = random() % screen_height;
 
       a = mandel_iters( ((double)x)*(X2-X1)/screen_width+X1,
-			((double)y)*(Y2-Y1)/screen_height+Y1) % MAX_ITER;
+			((double)y)*(Y2-Y1)/screen_height+Y1, NULL, NULL) % MAX_ITER;
       if (a > max) max = a;
     }
 
@@ -127,7 +145,7 @@ void pick_random_xy2(int * xx, int * yy)
       y = random() % screen_height;
 
       a = mandel_iters( ((double)x)*(X2-X1)/screen_width+X1,
-			((double)y)*(Y2-Y1)/screen_height+Y1) % MAX_ITER;
+			((double)y)*(Y2-Y1)/screen_height+Y1, NULL, NULL) % MAX_ITER;
       if (a > max/2) break;
     }
 
