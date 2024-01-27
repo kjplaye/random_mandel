@@ -2,13 +2,13 @@
 
 ## Basic usage
 
-Create random Mandelbrot zooms.  Useful for a daily wallpaper
+Create random Mandelbrot zooms.  Useful for a daily wallpaper.
 
     random_mandel.py <x_resolution> <y_resolution>
 
 ## Gallery
 
-![alt text](https://github.com/kjplaye/cwatch/blob/master/example_output_1.png?raw=true)
+![alt text](https://github.com/kjplaye/random_mandel/blob/master/example.png?raw=true)
 
 ## Typical steps to set up
 
