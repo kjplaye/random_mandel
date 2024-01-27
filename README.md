@@ -8,7 +8,13 @@ Create random Mandelbrot zooms.  Useful for a daily wallpaper.
 
 ## Gallery
 
-![alt text](https://github.com/kjplaye/random_mandel/blob/master/example.png?raw=true)
+![alt text](https://github.com/kjplaye/random_mandel/blob/master/example1.png?raw=true)
+
+![alt text](https://github.com/kjplaye/random_mandel/blob/master/example2.png?raw=true)
+
+![alt text](https://github.com/kjplaye/random_mandel/blob/master/example3.png?raw=true)
+
+![alt text](https://github.com/kjplaye/random_mandel/blob/master/example4.png?raw=true)
 
 ## Typical steps to set up
 
