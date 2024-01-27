@@ -2,6 +2,18 @@
 
 Create random Mandelbrot zooms, useful for a daily wallpaper.
 
+## Get random-mandel in Ubuntu
+
+    sudo add-apt-repository ppa:kjplaye/ppa
+    sudo apt update
+    sudo apt install random-mandel
+    man random-mandel
+    random-mandel <out.jpg> <pixel_width> <pixel_height>
+
+## Get random_mandel from source
+
+Git clone this repo and run make.
+
 ## Basic usage
 
     random_mandel.py <x_resolution> <y_resolution>
