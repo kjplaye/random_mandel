@@ -1,0 +1,11 @@
+Source: random-mandel
+Maintainer: Kevin Player <kjplaye@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 4.5.0
+Build-Depends: debhelper-compat (= 11), libjpeg-dev [i386 amd64]
+
+Package: random-mandel
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Create random zooms into the Mandelbrot set.
