@@ -1,25 +1,43 @@
 #!/usr/bin/python3
 
-import os,sys
+import os, sys
 import ctypes
 import numpy
 from PIL import Image
+from pathlib import Path
 
-my_path = os.path.dirname(os.path.abspath(__file__))
 
-_random_mandel = ctypes.cdll.LoadLibrary(my_path + '/_random_mandel.so')
+# Record the local path.
+local_path = Path(os.path.dirname(os.path.abspath(__file__)))
 
+# Parse arguments.
 if len(sys.argv) < 3:
-    raise ValueError("Usage: ./random_mandel width height")
+    print("Usage: ./random_mandel width height [path]")
+    sys.exit(1)
 
 width = int(sys.argv[1])
 height = int(sys.argv[2])
+if len(sys.argv) >= 4:
+    write_path = Path(sys.argv[3])
+else:
+    write_path = local_path / 'random_mandel.jpg'
 
+
+# Load library using ctypes.
+_random_mandel = ctypes.cdll.LoadLibrary(local_path / \
+                                         '_random_mandel.so')
+
+
+# Draw fractal.
 x_max = 0
 while x_max == 0:
     x = numpy.zeros([height,width,4],dtype = numpy.uint8)
-    _random_mandel.main_draw(x.ctypes._as_parameter_,ctypes.c_int32(width),ctypes.c_int32(height))
+    _random_mandel.main_draw(x.ctypes._as_parameter_,
+                             ctypes.c_int32(width),
+                             ctypes.c_int32(height))
     x_max = x.max()
+
     
+# Save.
 X = Image.fromarray(x[:,:,:3])
-X.save(my_path + '/random_mandel.jpg')
+X.save(write_path)
