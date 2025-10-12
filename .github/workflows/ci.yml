@@ -25,4 +25,4 @@ jobs:
         run: python -m pip install Pillow numpy
 
       # 5. Run your Makefile targets
-      - run: make test PYTHON=python
+      - run: make test PYTHON=$(which python)
