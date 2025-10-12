@@ -1,11 +1,4 @@
-#!/usr/bin/python3
-
-# Debug CI
-import sys
-print("Running with:", sys.executable)
-import numpy
-print("numpy version:", numpy.__version__)
-
+#!/usr/bin/env python
 
 import os, sys
 import ctypes
