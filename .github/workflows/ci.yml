@@ -33,4 +33,6 @@ jobs:
 
 
       # 5. Run your Makefile targets
-      - run: make test PYTHON=$(which python)
+      - run: |
+          export PYTHON=$(which python)
+	  make test
