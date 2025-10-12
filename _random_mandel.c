@@ -13,7 +13,7 @@
 #define FP_SIZE 28
 #define FPM(x, y) ((int)(((long long)(x) * (long long)(y)) >> FP_SIZE))
 
-#define point(x, y) pnt[(int)(x) + (int)(y)*screen_width]
+#define point(x, y) pnt[(int)(x) + (int)(y) * (screen_width)]
 unsigned *pnt;
 
 double X1 = -4;
