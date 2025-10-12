@@ -1,0 +1,18 @@
+name: CI
+
+# Run CI on pushes and pull requests
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - uses: actions/checkout@v3
+
+      # 2. Install any dependencies (optional)
+      # - run: sudo apt-get update && sudo apt-get install -y some-package
+
+      # 3. Run your Makefile targets
+      - run: make test
