@@ -13,7 +13,7 @@ jobs:
 
       # 2. Set up Python
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v3
    	with:
           python-version: '3.11'   # <- specify a version	
       # 3. Upgrade pip
