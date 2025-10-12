@@ -22,7 +22,7 @@ jobs:
 
       # 4. Install dependencies      
       - name: Install dependencies
-        run: pip install Pillow
+        run: pip install Pillow numpy
 
       # 4. Run your Makefile targets
       - run: make test
