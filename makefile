@@ -1,5 +1,5 @@
-# Default to 'python', fallback to 'python3' if not found
-PYTHON ?= $(shell command -v python || command -v python3)
+# PYTHON must be provided; default fallback for local
+PYTHON ?= python3
 
 all: _random_mandel.so
 

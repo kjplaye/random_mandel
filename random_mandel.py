@@ -2,7 +2,7 @@
 
 import os, sys
 import ctypes
-import numpy
+import numpy as np
 from PIL import Image
 from pathlib import Path
 
@@ -31,7 +31,7 @@ _random_mandel = ctypes.cdll.LoadLibrary(local_path / \
 # Draw fractal.
 x_max = 0
 while x_max == 0:
-    x = numpy.zeros([height,width,4],dtype = numpy.uint8)
+    x = np.zeros([height,width,4],dtype = np.uint8)
     _random_mandel.main_draw(x.ctypes._as_parameter_,
                              ctypes.c_int32(width),
                              ctypes.c_int32(height))
