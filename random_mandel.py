@@ -1,5 +1,12 @@
 #!/usr/bin/python3
 
+# Debug CI
+import sys
+print("Running with:", sys.executable)
+import numpy
+print("numpy version:", numpy.__version__)
+
+
 import os, sys
 import ctypes
 import numpy as np
