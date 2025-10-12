@@ -12,7 +12,7 @@ local_path = Path(os.path.dirname(os.path.abspath(__file__)))
 
 # Parse arguments.
 if len(sys.argv) < 3:
-    print("Usage: ./random_mandel width height [path]")
+    print("Usage: ./random_mandel width height [write_path]")
     sys.exit(1)
 
 width = int(sys.argv[1])
